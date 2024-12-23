@@ -1,24 +1,32 @@
 import { NavLink, Outlet } from "react-router";
 import { routes } from "../config/routes";
+import { IconButton, NavIconButton } from "../components/IconButton";
+import { NavSearchBar } from "../components/SearchBar";
 
 function Layout() {
    return (
       <>
-         <header className=" border-b border-stone-200 p-4">
+         <header className=" border-b border-stone-200 p-3 lg:px-8">
             <nav className="flex gap-2 justify-between items-center">
-               <div className="flex gap-2 items-center">
+               <div className="flex gap-4 items-center">
                   <NavLink to={routes.home}>Ohara</NavLink>
-                  <span className="pi pi-search"></span>
+                  <NavSearchBar />
                </div>
                <ul className="flex gap-2">
                   <li>
-                     <span className="pi pi-plus-circle"></span>
+                     <IconButton>
+                        <span className="pi pi-plus-circle"></span>
+                     </IconButton>
                   </li>
                   <li>
-                     <span className="pi pi-arrow-circle-down"></span>
+                     <NavIconButton to={routes.saved}>
+                        <span className="pi pi-arrow-circle-down"></span>
+                     </NavIconButton>
                   </li>
                   <li>
-                     <span className="pi pi-user"></span>
+                     <IconButton>
+                        <span className="pi pi-user"></span>
+                     </IconButton>
                   </li>
                </ul>
             </nav>
