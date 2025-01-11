@@ -1,19 +1,5 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Router } from "./Router";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { ModalContextProvider } from "../context/ModalContext";
-
-const queryClient = new QueryClient();
-
 function App() {
-   return (
-      <>
-         <QueryClientProvider client={queryClient}>
-               <Router />
-            <ReactQueryDevtools initialIsOpen={false} />
-         </QueryClientProvider>
-      </>
-   );
+   return <div>App</div>;
 }
 
-export default App;
+export { App };
