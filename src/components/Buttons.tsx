@@ -29,7 +29,16 @@ function NavIconButton({ children, to }: PropsWithChildren & { to: string }) {
    );
 }
 
-function Button() {}
+function Button({onClick, text }: ButtonProps) {
+   return (
+      <button
+         className="py-1 px-3 hover:bg-stone-100 border-stone-200 border rounded-lg transition-all flex items-center justify-between gap-4"
+         onClick={onClick}
+      >
+         {text}
+      </button>
+   );
+}
 
 function ButtonWithIcon({ children, onClick, text }: ButtonProps) {
    return (

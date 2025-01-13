@@ -6,6 +6,8 @@ function HomePage() {
          </section>
          <section>
             <h2>Recently Added:</h2>
+            
+            
          </section>
       </div>
    );

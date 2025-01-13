@@ -3,3 +3,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html {
+   position: fixed;
+   width: 100vw;
+   overflow: auto;
+}
+
+html,
+body,
+#root {
+   height: 100%;
+}
+
+#root {
+   display: flex;
+   flex-direction: column;
+}
+
+#root main {
+   flex-grow: 1;
+   /* overflow: auto; */
+
+}
+

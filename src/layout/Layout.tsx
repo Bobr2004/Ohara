@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from "react-router";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router";
 import { routes } from "../config/routes";
 import {
    ButtonWithIcon,
@@ -8,8 +8,12 @@ import {
 import { NavSearchBar } from "../components/SearchBar";
 import { Popup } from "../components/Popup";
 import { useState } from "react";
+import { useModal } from "../components/modals/ModalProvider";
+import { ModalsEnum } from "../config/enums";
 
 function Layout() {
+   const openModal = useModal();
+   // custom states
    const [isPopupOpen, setIsPopupOpen] = useState<"" | "add" | "user">("");
 
    const hundleAddButton = () => {
@@ -38,10 +42,23 @@ function Layout() {
                            <span className="pi pi-plus-circle"></span>
                         </IconButton>
                         <Popup isOpen={isPopupOpen === "add"}>
-                           <ButtonWithIcon text="Upload a pdf">
+                           <ButtonWithIcon
+                              text="Upload a pdf"
+                              onClick={() =>
+                                 openModal({ modal: ModalsEnum.uploadPdf })
+                              }
+                           >
                               <i className="pi pi-book"></i>
                            </ButtonWithIcon>
-                           <ButtonWithIcon text="Upload an audio">
+                           <ButtonWithIcon
+                              text="Upload an audio"
+                              onClick={() =>
+                                 openModal({
+                                    modal: ModalsEnum.error,
+                                    text: "This feature is still in development"
+                                 })
+                              }
+                           >
                               <i className="pi pi-headphones"></i>
                            </ButtonWithIcon>
                         </Popup>
@@ -54,14 +71,17 @@ function Layout() {
                   </li>
                   <li>
                      <div className="relative">
-                        <IconButton onClick={handleUserButton} isActive={isPopupOpen === "user"}>
+                        <IconButton
+                           onClick={handleUserButton}
+                           isActive={isPopupOpen === "user"}
+                        >
                            <span className="pi pi-user"></span>
                         </IconButton>
                         <Popup isOpen={isPopupOpen === "user"}>
                            <ButtonWithIcon text="Settings">
                               <i className="pi pi-cog"></i>
                            </ButtonWithIcon>
-                           <ButtonWithIcon text="Sign out">
+                           <ButtonWithIcon text="Sign out" onClick={()=>openModal({modal: ModalsEnum.auth})}>
                               <i className="pi pi-sign-out"></i>
                            </ButtonWithIcon>
                         </Popup>

@@ -3,6 +3,7 @@ import { Layout } from "../layout/Layout";
 import { routes } from "../config/routes";
 import { HomePage } from "../pages/HomePage";
 import { NotFoundPage } from "../pages/NotFoundPage";
+import { ModalProvider } from "../components/modals/ModalProvider";
 
 function Router() {
    return (
@@ -16,6 +17,7 @@ function Router() {
                <Route path="*" element={<NotFoundPage />} />
             </Route>
          </Routes>
+         <ModalProvider/>
       </BrowserRouter>
    );
 }
