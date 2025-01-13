@@ -28,8 +28,6 @@ function Layout() {
    }, []);
 
    onAuthStateChanged(auth, (user) => {
-      console.log("CHANGER");
-
       if (!user) return;
       logIn(user);
    });

@@ -15,7 +15,7 @@ function IconButton({ children, onClick, isActive, className }: ButtonProps) {
          className={twMerge(
             `${
                isActive ? "!border-stone-200 !bg-stone-100" : ""
-            } py-1 px-3 hover:bg-stone-100 hover:border-stone-200 border-white border rounded-lg transition-all text-xl flex items-center`,
+            } py-1 px-3 hover:bg-stone-100 hover:border-stone-200 border-white border rounded-lg transition-all text-2xl sm:text-xl flex items-center`,
             className
          )}
          onClick={onClick}
@@ -29,7 +29,7 @@ function NavIconButton({ children, to }: PropsWithChildren & { to: string }) {
    return (
       <NavLink
          to={to}
-         className="py-1 px-3 hover:bg-stone-100 hover:border-stone-200 border-white border rounded-lg transition-all text-xl flex items-center"
+         className="py-1 px-3 hover:bg-stone-100 hover:border-stone-200 border-white border rounded-lg transition-all text-2xl sm:text-xl flex items-center"
       >
          {children}
       </NavLink>

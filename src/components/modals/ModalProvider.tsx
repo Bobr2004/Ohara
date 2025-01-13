@@ -25,7 +25,7 @@ function Overlay() {
    }, []);
    return (
       <div
-         className="fixed inset-0 w-screen h-screen bg-black opacity-15"
+         className="fixed inset-0 w-screen h-screen bg-black opacity-15 popupResist"
          onClick={() => navigate(-1)}
       ></div>
    );
@@ -39,7 +39,7 @@ function ModalLayout({
    return (
       <>
          <Overlay />
-         <div className="fixed w-[360px] p-3 bg-white border border-stone-200 rounded-xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 space-y-3">
+         <div className="fixed w-[360px] p-3 bg-white border border-stone-200 rounded-xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 space-y-3 popupResist">
             <div className="relative">
                <h2 className="text-center text-xl">{title}</h2>
                <div className="absolute top-0 right-0">

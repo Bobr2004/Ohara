@@ -1,6 +1,5 @@
 import { User } from "firebase/auth";
 import { create } from "zustand";
-import { fbSignOut } from "../API/fbAuth";
 
 type userStoreType = {
    isLoggedIn: boolean;

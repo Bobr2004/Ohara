@@ -24,6 +24,18 @@ body,
 #root main {
    flex-grow: 1;
    /* overflow: auto; */
-
 }
 
+.navIconMenu {
+   transition: height 0.15s ease;
+   height: 0;
+   overflow: hidden;
+   
+
+   interpolate-size: allow-keywords;
+
+   &.active {
+      height: auto;
+      overflow: visible;
+   }
+}
