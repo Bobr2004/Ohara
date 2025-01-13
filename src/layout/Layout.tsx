@@ -10,9 +10,14 @@ import { Popup } from "../components/Popup";
 import { useState } from "react";
 import { useModal } from "../components/modals/ModalProvider";
 import { ModalsEnum } from "../config/enums";
+import { auth } from "../config/fb.config";
+import { onAuthStateChanged } from "firebase/auth";
+import { useUserStore } from "../store/userStore";
 
 function Layout() {
    const openModal = useModal();
+   const logIn = useUserStore((state) => state.logIn);
+   const userName = useUserStore((state) => state.userName);
    // custom states
    const [isPopupOpen, setIsPopupOpen] = useState<"" | "add" | "user">("");
 
@@ -23,6 +28,12 @@ function Layout() {
    const handleUserButton = () => {
       setIsPopupOpen((isPO) => (isPO === "user" ? "" : "user"));
    };
+   onAuthStateChanged(auth, (user) => {
+      if (!user) return;
+      logIn(user);
+   });
+
+   console.log(userName);
 
    return (
       <>
@@ -43,6 +54,7 @@ function Layout() {
                         </IconButton>
                         <Popup isOpen={isPopupOpen === "add"}>
                            <ButtonWithIcon
+                              className="justify-between w-full"
                               text="Upload a pdf"
                               onClick={() =>
                                  openModal({ modal: ModalsEnum.uploadPdf })
@@ -51,6 +63,7 @@ function Layout() {
                               <i className="pi pi-book"></i>
                            </ButtonWithIcon>
                            <ButtonWithIcon
+                              className="justify-between w-full"
                               text="Upload an audio"
                               onClick={() =>
                                  openModal({
@@ -78,10 +91,19 @@ function Layout() {
                            <span className="pi pi-user"></span>
                         </IconButton>
                         <Popup isOpen={isPopupOpen === "user"}>
-                           <ButtonWithIcon text="Settings">
+                           <ButtonWithIcon
+                              text="Settings"
+                              className="justify-between w-full"
+                           >
                               <i className="pi pi-cog"></i>
                            </ButtonWithIcon>
-                           <ButtonWithIcon text="Sign out" onClick={()=>openModal({modal: ModalsEnum.auth})}>
+                           <ButtonWithIcon
+                              text="Sign out"
+                              onClick={() =>
+                                 openModal({ modal: ModalsEnum.auth })
+                              }
+                              className="justify-between w-full"
+                           >
                               <i className="pi pi-sign-out"></i>
                            </ButtonWithIcon>
                         </Popup>
