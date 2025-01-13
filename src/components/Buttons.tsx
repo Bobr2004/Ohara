@@ -9,12 +9,15 @@ type ButtonProps = {
    className?: string;
 } & PropsWithChildren;
 
-function IconButton({ children, onClick, isActive }: ButtonProps) {
+function IconButton({ children, onClick, isActive, className }: ButtonProps) {
    return (
       <button
-         className={`${
-            isActive ? "!border-stone-200 !bg-stone-100" : ""
-         } py-1 px-3 hover:bg-stone-100 hover:border-stone-200 border-white border rounded-lg transition-all text-xl flex items-center`}
+         className={twMerge(
+            `${
+               isActive ? "!border-stone-200 !bg-stone-100" : ""
+            } py-1 px-3 hover:bg-stone-100 hover:border-stone-200 border-white border rounded-lg transition-all text-xl flex items-center`,
+            className
+         )}
          onClick={onClick}
       >
          {children}
@@ -26,7 +29,7 @@ function NavIconButton({ children, to }: PropsWithChildren & { to: string }) {
    return (
       <NavLink
          to={to}
-         className="py-1 px-3 hover:bg-stone-200 hover:border-stone-200 border-white border rounded-lg transition-all text-xl flex items-center"
+         className="py-1 px-3 hover:bg-stone-100 hover:border-stone-200 border-white border rounded-lg transition-all text-xl flex items-center"
       >
          {children}
       </NavLink>

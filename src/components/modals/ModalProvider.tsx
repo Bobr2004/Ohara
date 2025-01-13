@@ -5,6 +5,7 @@ import { UploadPdfModal } from "./UploadModal";
 import { ErrorModal } from "./ErrorModal";
 import { ModalsEnum } from "../../config/enums";
 import { AuthModal } from "./AuthModal";
+import { ConfirmModal } from "./ConfirmModal";
 
 function Overlay() {
    const navigate = useNavigate();
@@ -63,11 +64,17 @@ function ModalProvider() {
          return <UploadPdfModal />;
       case ModalsEnum.auth:
          return <AuthModal />;
-      case ModalsEnum.error:
+      case ModalsEnum.error: {
          const text = location.state?.text;
          return <ErrorModal {...{ text }} />;
+      }
+      case ModalsEnum.confirm: {
+         const text = location.state?.text;
+         const fn = location.state?.fn;
+         return <ConfirmModal {...{ text, fn }} />;
+      }
       default:
-         return <></>
+         return <></>;
    }
    // if (modal === ModalsEnum.uploadPdf) return <UploadPdfModal />;
    // // if (modal === ModalsEnum.uploadPdf) return <UploadPdfModal />;
@@ -87,8 +94,8 @@ type modalState = {
 function useModal() {
    const location = useLocation();
    const navigate = useNavigate();
-   const openModal = ({ modal, text }: modalState) => {
-      navigate(location.pathname, { state: { modal, text } });
+   const openModal = ({ modal, text}: modalState) => {
+      navigate(location.pathname, { state: { modal, text} });
    };
    return openModal;
 }
