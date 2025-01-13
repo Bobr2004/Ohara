@@ -1,15 +1,9 @@
 import { PropsWithChildren } from "react";
 import { NavLink } from "react-router";
 
-function IconButton({
-   children,
-   onClick
-}: PropsWithChildren & { onClick: () => void }) {
+function IconButton({ children }: PropsWithChildren) {
    return (
-      <button
-         className="py-1 px-3 hover:bg-stone-100 rounded-lg transition-all text-xl flex items-center"
-         onClick={onClick}
-      >
+      <button className="py-1 px-3 hover:bg-stone-200 rounded-lg transition-all text-xl flex items-center">
          {children}
       </button>
    );
@@ -19,7 +13,7 @@ function NavIconButton({ children, to }: PropsWithChildren & { to: string }) {
    return (
       <NavLink
          to={to}
-         className="py-1 px-3 hover:bg-stone-100 rounded-lg transition-all text-xl flex items-center"
+         className="py-1 px-3 hover:bg-stone-200 rounded-lg transition-all text-xl flex items-center"
       >
          {children}
       </NavLink>
