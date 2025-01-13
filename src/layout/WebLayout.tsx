@@ -60,7 +60,7 @@ function WebLayout() {
                   </IconButton>
                </div>
                <div
-                  className={`sm:!block w-full navIconMenu ${
+                  className={`sm:!block w-full sm:w-auto sm:h-max navIconMenu ${
                      isMenuOpen ? "active" : ""
                   }`}
                >

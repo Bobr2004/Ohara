@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  app:
+    image: 'acheron1232/schedule1:v7.0'
+    build:
+      context: .
+    container_name: app
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_USER=name
+      - POSTGRES_PASSWORD=secret
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/mydb
+      - SPRING_DATASOURCE_USERNAME=name
+      - SPRING_DATASOURCE_PASSWORD=secret
+
+    ports:
+      - "8080:8080"
+
+  db:
+    image: postgres
+    container_name: db
+    environment:
+      - POSTGRES_USER=name
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=mydb
+    ports:
+      - "5432:5432"
