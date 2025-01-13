@@ -1,5 +1,6 @@
 import { User } from "firebase/auth";
 import { create } from "zustand";
+import { fbSignOut } from "../API/fbAuth";
 
 type userStoreType = {
    isLoggedIn: boolean;
@@ -22,8 +23,9 @@ const useUserStore = create<userStoreType>((set) => ({
          photoUrl: user.photoURL || "",
          email: user.email || ""
       }),
-   signOut: () =>
-      set({ isLoggedIn: false, userName: "", photoUrl: "", email: "" })
+   signOut: () => {
+      set({ isLoggedIn: false, userName: "", photoUrl: "", email: "" });
+   }
 }));
 
 export { useUserStore };

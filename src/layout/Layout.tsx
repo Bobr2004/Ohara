@@ -20,7 +20,6 @@ function Layout() {
    }
 
    useEffect(() => {
-      console.log(window.matchMedia("(display-mode: standalone)").matches);
       if (isMobilePWA()) {
          setLayoutMode("PWA");
       } else {
@@ -29,6 +28,8 @@ function Layout() {
    }, []);
 
    onAuthStateChanged(auth, (user) => {
+      console.log("CHANGER");
+
       if (!user) return;
       logIn(user);
    });

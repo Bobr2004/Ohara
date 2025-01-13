@@ -4,8 +4,7 @@ import { IconButton } from "../Buttons";
 import { UploadPdfModal } from "./UploadModal";
 import { ErrorModal } from "./ErrorModal";
 import { ModalsEnum } from "../../config/enums";
-import { AuthModal } from "./AuthModal";
-import { ConfirmModal } from "./ConfirmModal";
+import { AuthModal, SignOutModal } from "./AuthModal";
 
 function Overlay() {
    const navigate = useNavigate();
@@ -68,10 +67,10 @@ function ModalProvider() {
          const text = location.state?.text;
          return <ErrorModal {...{ text }} />;
       }
-      case ModalsEnum.confirm: {
+      case ModalsEnum.signOut: {
          const text = location.state?.text;
          const fn = location.state?.fn;
-         return <ConfirmModal {...{ text, fn }} />;
+         return <SignOutModal {...{ text, fn }} />;
       }
       default:
          return <></>;
@@ -94,8 +93,8 @@ type modalState = {
 function useModal() {
    const location = useLocation();
    const navigate = useNavigate();
-   const openModal = ({ modal, text}: modalState) => {
-      navigate(location.pathname, { state: { modal, text} });
+   const openModal = ({ modal, text }: modalState) => {
+      navigate(location.pathname, { state: { modal, text } });
    };
    return openModal;
 }

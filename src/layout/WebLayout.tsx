@@ -79,7 +79,9 @@ function WebLayout() {
                         <IconButton
                            onClick={handleUserButton}
                            isActive={isPopupOpen === "user"}
-                           className="p-0 overflow-hidden mx-2"
+                           className={`${
+                              isLoggedIn ? "p-0 overflow-hidden mx-2" : ""
+                           }`}
                         >
                            {isLoggedIn ? (
                               <img
@@ -107,7 +109,7 @@ function WebLayout() {
                                  text="Sign out"
                                  onClick={() =>
                                     openModal({
-                                       modal: ModalsEnum.confirm,
+                                       modal: ModalsEnum.signOut,
                                        text: "Are you sure you want to sign out?"
                                     })
                                  }
