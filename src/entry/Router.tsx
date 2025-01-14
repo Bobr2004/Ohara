@@ -4,6 +4,7 @@ import { routes } from "../config/routes";
 import { HomePage } from "../pages/HomePage";
 import { NotFoundPage } from "../pages/NotFoundPage";
 import { ModalProvider } from "../components/modals/ModalProvider";
+import { SettingsPage } from "../pages/SettingsPage";
 
 function Router() {
    return (
@@ -13,11 +14,12 @@ function Router() {
                <Route index path={routes.home} element={<HomePage />} />
                <Route path={routes.search} element={<p>search</p>} />
                <Route path={routes.saved} element={<p>saved</p>} />
+               <Route path={routes.settings} element={<SettingsPage />} />
                <Route path={routes.book} element={<p>book</p>} />
                <Route path="*" element={<NotFoundPage />} />
             </Route>
          </Routes>
-         <ModalProvider/>
+         <ModalProvider />
       </BrowserRouter>
    );
 }

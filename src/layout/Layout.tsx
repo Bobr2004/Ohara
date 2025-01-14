@@ -31,7 +31,7 @@ function Layout() {
       if (!user) return;
       logIn(user);
    });
-   if (layOutMode === "PWA") return <PwaLayout />;
+   if (layOutMode === "PWA") return <WebLayout />;
    if (layOutMode === "WEB") return <WebLayout />;
    return <></>;
 }

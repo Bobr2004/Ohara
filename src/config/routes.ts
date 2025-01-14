@@ -3,6 +3,7 @@ const routes = {
    search: "search",
    saved: "saved",
    book: "book/:bookId",
+   settings: "settings",
    read: (bookId: string) => `book/${bookId}`
 };
 

@@ -6,7 +6,7 @@ type PopupProps = {
 function Popup({ isOpen, children }: PopupProps) {
    return (
       <div
-         className={`flex flex-col gap-2 absolute left-0 sm:right-0 translate-y-1 w-full sm:w-max bg-white rounded-xl  border border-stone-200 p-2 ${isOpen ? "": "hidden"}`}
+         className={`flex flex-col gap-2 absolute left-0 sm:left-auto sm:right-0 translate-y-1 w-full sm:w-max bg-white rounded-xl  border border-stone-200 p-2 ${isOpen ? "": "hidden"}`}
       >
          {children}
       </div>

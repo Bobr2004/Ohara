@@ -39,11 +39,11 @@ function ModalLayout({
    return (
       <>
          <Overlay />
-         <div className="fixed w-[360px] p-3 bg-white border border-stone-200 rounded-xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 space-y-3 popupResist">
+         <div className="fixed w-[calc(100%-2rem)] sm:w-[360px] p-3 bg-white border border-stone-200 rounded-xl top-[25%] left-1/2 -translate-x-1/2 space-y-3 popupResist">
             <div className="relative">
                <h2 className="text-center text-xl">{title}</h2>
                <div className="absolute top-0 right-0">
-                  <IconButton onClick={() => navigate(-1)}>
+                  <IconButton onClick={() => navigate(-1)} className="!text-xl">
                      <i className="pi pi-times-circle"></i>
                   </IconButton>
                </div>

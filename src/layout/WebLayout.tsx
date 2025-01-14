@@ -33,7 +33,6 @@ function WebLayout() {
          .querySelector("#root")
          ?.addEventListener("click", ({ target }) => {
             const targt = target as HTMLElement;
-            console.log(targt.closest(".popupResist"));
             if (targt.closest(".popupResist")) return;
             else {
                setIsPopupOpen("");
@@ -44,8 +43,8 @@ function WebLayout() {
    return (
       <>
          <header className=" border-b border-stone-200 p-3 lg:px-8">
-            <nav className="flex gap-1 justify-between items-center flex-wrap">
-               <div className="flex justify-center sm:justify-start w-full sm:w-max relative items-center gap-4">
+            <nav className="flex justify-between items-center flex-wrap relative">
+               <div className="flex justify-center sm:justify-start w-full sm:w-max  items-center gap-4">
                   <NavLink to={routes.home} className="text-xl sm:text-base">
                      Ohara
                   </NavLink>
@@ -53,18 +52,18 @@ function WebLayout() {
                </div>
                <div>
                   <IconButton
-                     className="absolute top-2 right-2 sm:hidden"
+                     className="absolute -top-1 right-2 sm:hidden"
                      onClick={() => setIsMenuOpen((isO) => !isO)}
                   >
                      <i className="pi pi-bars"></i>
                   </IconButton>
                </div>
                <div
-                  className={`sm:!block w-full sm:w-auto sm:h-max navIconMenu ${
+                  className={`w-full sm:!block sm:!w-auto sm:!h-auto sm:!overflow-visible navIconMenu ${
                      isMenuOpen ? "active" : ""
                   }`}
                >
-                  <ul className="gap-2 flex justify-evenly sm:justify-start w-full sm:w-max relative sm:static">
+                  <ul className="gap-2 flex justify-evenly sm:justify-start w-full sm:w-max relative sm:static mt-1 sm:mt-0">
                      <li>
                         <div className="sm:relative popupResist">
                            <IconButton
@@ -132,12 +131,16 @@ function WebLayout() {
                            </IconButton>
                            <Popup isOpen={isPopupOpen === "user"}>
                               {userName && <p className="px-3">{userName}</p>}
-                              <ButtonWithIcon
-                                 text="Settings"
+                              <NavIconButton
                                  className="justify-between w-full"
+                                 to={routes.settings}
+                                 onClick={() => setIsPopupOpen("")}
                               >
-                                 <i className="pi pi-cog"></i>
-                              </ButtonWithIcon>
+                                 <>
+                                    <p className="text-base">Settings</p>
+                                    <i className="pi pi-cog"></i>
+                                 </>
+                              </NavIconButton>
                               {isLoggedIn ? (
                                  <ButtonWithIcon
                                     text="Sign out"

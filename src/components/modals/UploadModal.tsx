@@ -4,7 +4,7 @@ function UploadPdfModal() {
   return (
     
     <ModalLayout title="Upload a Pdf Book">
-      <div>Hold up</div>
+      <div className="bg-red-200 h-80">Hold up</div>
     </ModalLayout>
     
   )
