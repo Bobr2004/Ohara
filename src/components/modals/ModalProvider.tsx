@@ -5,6 +5,7 @@ import { UploadPdfModal } from "./UploadModal";
 import { ErrorModal } from "./ErrorModal";
 import { ModalsEnum } from "../../config/enums";
 import { AuthModal, SignOutModal } from "./AuthModal";
+import { AvatarsModal } from "./AvatarsModal";
 
 function Overlay() {
    const navigate = useNavigate();
@@ -39,7 +40,7 @@ function ModalLayout({
    return (
       <>
          <Overlay />
-         <div className="fixed w-[calc(100%-2rem)] sm:w-[360px] p-3 bg-white border border-stone-200 rounded-xl top-[25%] left-1/2 -translate-x-1/2 space-y-3 popupResist">
+         <div className="fixed w-[calc(100%-2rem)] sm:w-[420px] p-3 bg-white border border-stone-200 rounded-xl top-[25%] left-1/2 -translate-x-1/2 space-y-3 popupResist">
             <div className="relative">
                <h2 className="text-center text-xl">{title}</h2>
                <div className="absolute top-0 right-0">
@@ -63,6 +64,8 @@ function ModalProvider() {
          return <UploadPdfModal />;
       case ModalsEnum.auth:
          return <AuthModal />;
+      case ModalsEnum.avatars:
+         return <AvatarsModal />;
       case ModalsEnum.error: {
          const text = location.state?.text;
          return <ErrorModal {...{ text }} />;

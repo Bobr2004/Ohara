@@ -1,6 +1,5 @@
-import { NavLink, Outlet } from "react-router";
+import { Outlet } from "react-router";
 import { routes } from "../config/routes";
-import { NavSearchBar } from "../components/SearchBar";
 import {
    ButtonWithIcon,
    IconButton,
@@ -16,7 +15,6 @@ function PwaLayout() {
    const openModal = useModal();
    // custom states
    const [isPopupOpen, setIsPopupOpen] = useState<"" | "add" | "user">("");
-   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
    const { userName, isLoggedIn, photoUrl } = useUserStore((store) => store);
 

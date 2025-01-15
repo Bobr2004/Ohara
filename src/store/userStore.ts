@@ -11,6 +11,7 @@ type userStoreType = {
 
    layoutMode: "PWA" | "WEB" | null;
    setLayoutMode: (mode: "PWA" | "WEB" | null) => void;
+   changeAvatar: (URL: string) => void;
 };
 
 const useUserStore = create<userStoreType>((set) => ({
@@ -31,6 +32,9 @@ const useUserStore = create<userStoreType>((set) => ({
    },
    setLayoutMode: (mode: "PWA" | "WEB" | null) => {
       set((usrData) => ({ ...usrData, layoutMode: mode }));
+   },
+   changeAvatar: (URL: string) => {
+      set((usrData) => ({ ...usrData, photoUrl: URL }));
    }
 }));
 
