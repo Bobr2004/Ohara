@@ -1,16 +1,17 @@
 import { NavLink, Outlet } from "react-router";
 import { routes } from "../config/routes";
-import {
-   ButtonWithIcon,
-   IconButton,
-   NavIconButton
-} from "../components/Buttons";
+
 import { NavSearchBar } from "../components/SearchBar";
 import { Popup } from "../components/Popup";
 import { useEffect, useState } from "react";
 import { useModal } from "../components/modals/ModalProvider";
 import { ModalsEnum } from "../config/enums";
 import { useUserStore } from "../store/userStore";
+import {
+   LayoutBorderlessButton,
+   LayoutIconButton,
+   LayoutLinkIconButton
+} from "./LayoutComponents";
 
 function WebLayout() {
    const openModal = useModal();
@@ -51,12 +52,12 @@ function WebLayout() {
                   <NavSearchBar className="hidden sm:flex" />
                </div>
                <div>
-                  <IconButton
+                  <LayoutIconButton
                      className="absolute -top-1 right-2 sm:hidden"
                      onClick={() => setIsMenuOpen((isO) => !isO)}
                   >
                      <i className="pi pi-bars"></i>
-                  </IconButton>
+                  </LayoutIconButton>
                </div>
                <div
                   className={`w-full sm:!block sm:!w-auto sm:!h-auto sm:!overflow-visible navIconMenu ${
@@ -66,25 +67,29 @@ function WebLayout() {
                   <ul className="gap-2 flex justify-evenly sm:justify-start w-full sm:w-max relative sm:static mt-1 sm:mt-0">
                      <li>
                         <div className="sm:relative popupResist">
-                           <IconButton
+                           {/* ADD ICON */}
+                           <LayoutIconButton
                               onClick={hundleAddButton}
-                              isActive={isPopupOpen === "add"}
+                              className={
+                                 isPopupOpen === "add"
+                                    ? "border-stone-200 bg-stone-100"
+                                    : ""
+                              }
                            >
                               <span className="pi pi-plus-circle"></span>
-                           </IconButton>
+                           </LayoutIconButton>
                            <Popup isOpen={isPopupOpen === "add"}>
-                              <ButtonWithIcon
-                                 className="justify-between w-full"
-                                 text="Upload a pdf"
+                              <LayoutBorderlessButton
                                  onClick={() =>
                                     openModal({ modal: ModalsEnum.uploadPdf })
                                  }
                               >
-                                 <i className="pi pi-book"></i>
-                              </ButtonWithIcon>
-                              <ButtonWithIcon
-                                 className="justify-between w-full"
-                                 text="Upload an audio"
+                                 <>
+                                    <span>Upload a pdf</span>
+                                    <i className="pi pi-book"></i>
+                                 </>
+                              </LayoutBorderlessButton>
+                              <LayoutBorderlessButton
                                  onClick={() =>
                                     openModal({
                                        modal: ModalsEnum.error,
@@ -92,28 +97,35 @@ function WebLayout() {
                                     })
                                  }
                               >
-                                 <i className="pi pi-headphones"></i>
-                              </ButtonWithIcon>
+                                 <>
+                                    <span>Upload an audio</span>
+                                    <i className="pi pi-headphones"></i>
+                                 </>
+                              </LayoutBorderlessButton>
                            </Popup>
                         </div>
                      </li>
                      <li>
-                        <NavIconButton to={routes.saved}>
+                        <LayoutLinkIconButton to={routes.saved}>
                            <span className="pi pi-arrow-circle-down"></span>
-                        </NavIconButton>
+                        </LayoutLinkIconButton>
                      </li>
                      <li className="sm:hidden">
-                        <IconButton>
+                        <LayoutLinkIconButton to={routes.search}>
                            <span className="pi pi-search"></span>
-                        </IconButton>
+                        </LayoutLinkIconButton>
                      </li>
                      <li>
                         <div className="sm:relative popupResist">
-                           <IconButton
+                           {/* USER ICON */}
+                           <LayoutIconButton
                               onClick={handleUserButton}
-                              isActive={isPopupOpen === "user"}
                               className={`${
                                  isLoggedIn ? "p-0 overflow-hidden sm:mx-1" : ""
+                              } ${
+                                 isPopupOpen === "user"
+                                    ? "border-stone-200 bg-stone-100"
+                                    : ""
                               }`}
                            >
                               {isLoggedIn ? (
@@ -128,10 +140,12 @@ function WebLayout() {
                               ) : (
                                  <span className="pi pi-user"></span>
                               )}
-                           </IconButton>
+                           </LayoutIconButton>
                            <Popup isOpen={isPopupOpen === "user"}>
-                              {userName && <p className="px-3 text-center">{userName}</p>}
-                              <NavIconButton
+                              {userName && (
+                                 <p className="px-3 text-center">{userName}</p>
+                              )}
+                              <LayoutLinkIconButton
                                  className="justify-between w-full"
                                  to={routes.settings}
                                  onClick={() => setIsPopupOpen("")}
@@ -140,10 +154,9 @@ function WebLayout() {
                                     <p className="text-base">Settings</p>
                                     <i className="pi pi-cog"></i>
                                  </>
-                              </NavIconButton>
+                              </LayoutLinkIconButton>
                               {isLoggedIn ? (
-                                 <ButtonWithIcon
-                                    text="Sign out"
+                                 <LayoutBorderlessButton
                                     onClick={() =>
                                        openModal({
                                           modal: ModalsEnum.signOut,
@@ -152,18 +165,23 @@ function WebLayout() {
                                     }
                                     className="justify-between w-full"
                                  >
-                                    <i className="pi pi-sign-out"></i>
-                                 </ButtonWithIcon>
+                                    <>
+                                       <span>Sign out</span>
+                                       <i className="pi pi-sign-out text-xl"></i>
+                                    </>
+                                 </LayoutBorderlessButton>
                               ) : (
-                                 <ButtonWithIcon
-                                    text="Log in"
+                                 <LayoutBorderlessButton
                                     onClick={() =>
                                        openModal({ modal: ModalsEnum.auth })
                                     }
                                     className="justify-between w-full"
                                  >
-                                    <i className="pi pi-sign-in"></i>
-                                 </ButtonWithIcon>
+                                    <>
+                                       <span>Log in</span>
+                                       <i className="pi pi-sign-in"></i>
+                                    </>
+                                 </LayoutBorderlessButton>
                               )}
                            </Popup>
                         </div>

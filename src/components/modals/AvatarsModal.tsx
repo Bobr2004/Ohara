@@ -3,7 +3,7 @@ import { ModalLayout } from "./ModalProvider";
 import { listAvatars } from "../../API/fbStorage";
 import { AvatarSelect } from "../AvatarSelect";
 import { useUserStore } from "../../store/userStore";
-import { Button } from "../Buttons";
+import { WarningButton } from "../Buttons";
 import { useState } from "react";
 
 function AvatarsModal() {
@@ -37,12 +37,11 @@ function AvatarsModal() {
                </ul>
             </div>
          </section>
-         <h3>User name</h3>
          <input
             value={userNameVal}
             onChange={({ target }) => setUserNameVal(target.value)}
          />
-         <Button text="Save changes" className="ml-auto" />
+         <WarningButton className="mx-auto">Save changes</WarningButton>
       </ModalLayout>
    );
 }

@@ -4,18 +4,16 @@ import { twMerge } from "tailwind-merge";
 
 type ButtonProps = {
    onClick?: () => void;
-   text?: string;
-   isActive?: boolean;
    className?: string;
 } & PropsWithChildren;
 
-function IconButton({ children, onClick, isActive, className }: ButtonProps) {
+// Main button (got a bigger fontsize for i elements)
+function Button({ children, className, onClick }: ButtonProps) {
    return (
       <button
          className={twMerge(
-            `${
-               isActive ? "!border-stone-200 !bg-stone-100" : ""
-            } py-1 px-3 hover:bg-stone-100 hover:border-stone-200 border-white border rounded-lg text-2xl sm:text-xl flex items-center`,
+            `py-1 px-5 bg-white hover:bg-stone-100 border-stone-200 border rounded-lg 
+         flex items-center gap-4 [&>i]:text-xl`,
             className
          )}
          onClick={onClick}
@@ -25,18 +23,15 @@ function IconButton({ children, onClick, isActive, className }: ButtonProps) {
    );
 }
 
-function NavIconButton({
-   children,
-   to,
-   className,
-   onClick
-}: ButtonProps & { to: string }) {
+type LinkButtonProps = ButtonProps & { to: string };
+
+function LinkButton({ children, className, ...ButtonProps }: LinkButtonProps) {
    return (
       <NavLink
-         {...{ to, onClick }}
+         {...ButtonProps}
          className={twMerge(
-            `py-1 px-3 hover:bg-stone-100 hover:border-stone-200 border-white border rounded-lg 
-            text-2xl sm:text-xl flex items-center gap-4`,
+            `py-1 px-5 bg-white hover:bg-stone-100 border-stone-200 border rounded-lg 
+         flex items-center gap-4 [&>i]:text-xl`,
             className
          )}
       >
@@ -45,35 +40,36 @@ function NavIconButton({
    );
 }
 
-function Button({ onClick, text, className }: ButtonProps) {
-   return (
-      <button
-         className={twMerge(
-            `py-1 px-5 hover:bg-stone-100 border-stone-200 border rounded-lg 
-         flex items-center gap-4`,
-            className
-         )}
-         onClick={onClick}
-      >
-         {text}
-      </button>
-   );
-}
 
-function ButtonWithIcon({ children, onClick, text, className }: ButtonProps) {
+// Color variants
+function DangerButton({ children, className, ...ButtonProps }: ButtonProps) {
    return (
-      <button
+      <Button
+         {...ButtonProps}
          className={twMerge(
-            `py-1 px-3 hover:bg-stone-100 hover:border-stone-200 border-white border 
-         rounded-lg text-xl flex items-center gap-4 `,
+            "text-white border-rose-700 bg-rose-500 hover:bg-rose-600 hover:border-rose-600",
             className
          )}
-         onClick={onClick}
       >
-         {text && <p className="!text-base">{text}</p>}
          {children}
-      </button>
+      </Button>
    );
 }
 
-export { IconButton, NavIconButton, Button, ButtonWithIcon };
+function WarningButton({ children, className, ...ButtonProps }: ButtonProps) {
+   return (
+      <Button
+         {...ButtonProps}
+         className={twMerge(
+            "text-white border-sky-700 bg-sky-500 hover:bg-sky-600 hover:border-sky-600",
+            className
+         )}
+      >
+         {children}
+      </Button>
+   );
+}
+
+export { Button, LinkButton, DangerButton, WarningButton };
+
+export type { ButtonProps, LinkButtonProps };

@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import { PwaLayout } from "./PwaLayout";
+import { useEffect } from "react";
 import { WebLayout } from "./WebLayout";
-import { getAdditionalUserInfo, onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../config/fb.config";
 import { useUserStore } from "../store/userStore";
 import { useLocation, useNavigate } from "react-router";
+import { PwaLayout } from "./PwaLayout";
 
 function Layout() {
    const setLayoutMode = useUserStore((store) => store.setLayoutMode);
@@ -38,8 +38,9 @@ function Layout() {
    });
 
    if (layoutMode === "PWA") return <PwaLayout />;
-   if (layoutMode === "WEB") return <WebLayout />;
+   if (layoutMode === "WEB") return <PwaLayout />;
    return <></>;
 }
 
-export { Layout };
+
+export { Layout};

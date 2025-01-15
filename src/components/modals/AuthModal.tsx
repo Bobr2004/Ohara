@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
 import { fbSignInWithGoogle, fbSignOut } from "../../API/fbAuth";
-import { Button, ButtonWithIcon } from "../Buttons";
+import { Button, DangerButton } from "../Buttons";
 import { ModalLayout } from "./ModalProvider";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../config/fb.config";
@@ -16,13 +16,12 @@ function AuthModal() {
       <ModalLayout title="Log in into an account">
          {/* <p className="text-center">Options:</p> */}
          <div className="flex justify-center">
-            <ButtonWithIcon
-               onClick={fbSignInWithGoogle}
-               text="Google"
-               className="border-stone-200"
-            >
-               <i className="pi pi-google"></i>
-            </ButtonWithIcon>
+            <Button onClick={fbSignInWithGoogle} className="border-stone-200">
+               <>
+                  <span>Google</span>
+                  <i className="pi pi-google"></i>
+               </>
+            </Button>
          </div>
       </ModalLayout>
    );
@@ -41,14 +40,13 @@ function SignOutModal({ text }: { text: string }) {
       <ModalLayout title="Confirmation">
          <p className="text-center">{text}</p>
          <div className="flex gap-4 justify-center w-full ">
-            <Button text="Cancel" />
-            <ButtonWithIcon
-               text="Sign out"
-               onClick={fbSignOut}
-               className="border-rose-800 bg-rose-500 hover:bg-rose-600 hover:border-rose-600"
-            >
-               <i className="pi pi-sign-out"></i>
-            </ButtonWithIcon>
+            <Button onClick={() => navigate(-1)}>Cancel</Button>
+            <DangerButton onClick={fbSignOut}>
+               <>
+                  <span>Sign out</span>
+                  <i className="pi pi-sign-out"></i>
+               </>
+            </DangerButton>
          </div>
       </ModalLayout>
    );

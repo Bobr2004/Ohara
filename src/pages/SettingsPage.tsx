@@ -1,4 +1,4 @@
-import { ButtonWithIcon } from "../components/Buttons";
+import { Button } from "../components/Buttons";
 import { useModal } from "../components/modals/ModalProvider";
 import { ModalsEnum } from "../config/enums";
 import { useUserStore } from "../store/userStore";
@@ -22,27 +22,37 @@ function SettingsPage() {
                      <p className="text-center">You are not logged in</p>
                   </>
                ) : (
-                  <ul className="flex justify-center sm:justify-start gap-4 relative flex-wrap">
-                     <li className="order-2 sm:order-1">
+                  <ul className="flex flex-col items-center sm:flex-row sm:justify-start gap-x-4 gap-y-2 relative flex-wrap">
+                     <li className="sm:hidden">
+                        <h2 className="text-center font-medium">
+                           Account info
+                        </h2>
+                     </li>
+                     <li>
                         <img
                            src={photoUrl}
                            className="h-20 w-20 object-cover"
                         />
                      </li>
-                     <li className="order-3">
-                        <h2>Account info</h2>
-                        <p>{userName}</p> <p>{email}</p>
+                     <li>
+                        <h2 className="text-center font-medium hidden sm:block">
+                           Account info
+                        </h2>
+                        <p>{userName}</p>
+                        <p>{email}</p>
                      </li>
-                     <li className="w-full sm:w-auto order-1 sm:order-4">
-                        <ButtonWithIcon
-                           text="Edit profile"
-                           className="border-stone-200  ml-auto"
+                     <li>
+                        <Button
                            onClick={() =>
                               openModal({ modal: ModalsEnum.avatars })
                            }
                         >
-                           <i className="pi pi-pencil"></i>
-                        </ButtonWithIcon>
+                           <>
+                              <span>Edit profile</span>
+
+                              <i className="pi pi-user-edit"></i>
+                           </>
+                        </Button>
                      </li>
                   </ul>
                )}

@@ -1,15 +1,15 @@
 import { Outlet } from "react-router";
 import { routes } from "../config/routes";
-import {
-   ButtonWithIcon,
-   IconButton,
-   NavIconButton
-} from "../components/Buttons";
 import { Popup } from "../components/Popup";
 import { useEffect, useState } from "react";
 import { useModal } from "../components/modals/ModalProvider";
 import { useUserStore } from "../store/userStore";
 import { ModalsEnum } from "../config/enums";
+import {
+   LayoutBorderlessButton,
+   LayoutIconButton,
+   LayoutLinkIconButton
+} from "./LayoutComponents";
 
 function PwaLayout() {
    const openModal = useModal();
@@ -48,25 +48,30 @@ function PwaLayout() {
                   <ul className="gap-2 flex justify-evenly w-full items-center relative">
                      <li>
                         <div className="sm:relative popupResist">
-                           <IconButton
+                           <LayoutIconButton
                               onClick={hundleAddButton}
-                              isActive={isPopupOpen === "add"}
+                              className={
+                                 isPopupOpen === "add"
+                                    ? "border-stone-200 bg-stone-100"
+                                    : ""
+                              }
                            >
                               <span className="pi pi-plus-circle"></span>
-                           </IconButton>
-                           <Popup isOpen={isPopupOpen === "add"}>
-                              <ButtonWithIcon
+                           </LayoutIconButton>
+                           <Popup isOpen={isPopupOpen === "add"} direction="up">
+                              <LayoutBorderlessButton
                                  className="justify-between w-full"
-                                 text="Upload a pdf"
                                  onClick={() =>
                                     openModal({ modal: ModalsEnum.uploadPdf })
                                  }
                               >
-                                 <i className="pi pi-book"></i>
-                              </ButtonWithIcon>
-                              <ButtonWithIcon
+                                 <>
+                                    <span>Upload a pdf</span>
+                                    <i className="pi pi-book"></i>
+                                 </>
+                              </LayoutBorderlessButton>
+                              <LayoutBorderlessButton
                                  className="justify-between w-full"
-                                 text="Upload an audio"
                                  onClick={() =>
                                     openModal({
                                        modal: ModalsEnum.error,
@@ -74,26 +79,28 @@ function PwaLayout() {
                                     })
                                  }
                               >
-                                 <i className="pi pi-headphones"></i>
-                              </ButtonWithIcon>
+                                 <>
+                                    <span>Upload an audio</span>
+                                    <i className="pi pi-headphones"></i>
+                                 </>
+                              </LayoutBorderlessButton>
                            </Popup>
                         </div>
                      </li>
                      <li>
-                        <NavIconButton to={routes.saved}>
+                        <LayoutLinkIconButton to={routes.saved}>
                            <span className="pi pi-arrow-circle-down"></span>
-                        </NavIconButton>
+                        </LayoutLinkIconButton>
                      </li>
                      <li>
-                        <NavIconButton to={routes.search}>
+                        <LayoutLinkIconButton to={routes.search}>
                            <span className="pi pi-search"></span>
-                        </NavIconButton>
+                        </LayoutLinkIconButton>
                      </li>
                      <li>
                         <div className="sm:relative popupResist">
-                           <IconButton
+                           <LayoutIconButton
                               onClick={handleUserButton}
-                              isActive={isPopupOpen === "user"}
                               className={`${
                                  isLoggedIn ? "p-0 overflow-hidden" : ""
                               }`}
@@ -110,9 +117,12 @@ function PwaLayout() {
                               ) : (
                                  <span className="pi pi-user"></span>
                               )}
-                           </IconButton>
-                           <Popup isOpen={isPopupOpen === "user"}>
-                              <NavIconButton
+                           </LayoutIconButton>
+                           <Popup
+                              isOpen={isPopupOpen === "user"}
+                              direction="up"
+                           >
+                              <LayoutLinkIconButton
                                  className="justify-between w-full"
                                  to={routes.settings}
                                  onClick={() => setIsPopupOpen("")}
@@ -121,10 +131,9 @@ function PwaLayout() {
                                     <p className="text-base">Settings</p>
                                     <i className="pi pi-cog"></i>
                                  </>
-                              </NavIconButton>
+                              </LayoutLinkIconButton>
                               {isLoggedIn ? (
-                                 <ButtonWithIcon
-                                    text="Sign out"
+                                 <LayoutBorderlessButton
                                     onClick={() =>
                                        openModal({
                                           modal: ModalsEnum.signOut,
@@ -133,18 +142,23 @@ function PwaLayout() {
                                     }
                                     className="justify-between w-full"
                                  >
-                                    <i className="pi pi-sign-out"></i>
-                                 </ButtonWithIcon>
+                                    <>
+                                       <span>Sign out</span>
+                                       <i className="pi pi-sign-out"></i>
+                                    </>
+                                 </LayoutBorderlessButton>
                               ) : (
-                                 <ButtonWithIcon
-                                    text="Log in"
+                                 <LayoutBorderlessButton
                                     onClick={() =>
                                        openModal({ modal: ModalsEnum.auth })
                                     }
                                     className="justify-between w-full"
                                  >
-                                    <i className="pi pi-sign-in"></i>
-                                 </ButtonWithIcon>
+                                    <>
+                                       <span>Log in</span>
+                                       <i className="pi pi-sign-in"></i>
+                                    </>
+                                 </LayoutBorderlessButton>
                               )}
                               {userName && (
                                  <p className="px-3 text-center">{userName}</p>
