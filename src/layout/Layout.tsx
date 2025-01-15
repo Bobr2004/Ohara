@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react";
 import { PwaLayout } from "./PwaLayout";
 import { WebLayout } from "./WebLayout";
-import { onAuthStateChanged } from "firebase/auth";
+import { getAdditionalUserInfo, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../config/fb.config";
 import { useUserStore } from "../store/userStore";
+import { useLocation, useNavigate } from "react-router";
 
 function Layout() {
-   const [layOutMode, setLayoutMode] = useState<"PWA" | "WEB" | null>(null);
-
+   const setLayoutMode = useUserStore((store) => store.setLayoutMode);
+   const layoutMode = useUserStore((store) => store.layoutMode);
    const logIn = useUserStore((store) => store.logIn);
+
+   const location = useLocation();
+   const navigate = useNavigate();
 
    function isMobilePWA() {
       const isPWA = window.matchMedia("(display-mode: standalone)").matches;
@@ -25,14 +29,16 @@ function Layout() {
       } else {
          setLayoutMode("WEB");
       }
+      navigate(location.pathname, { replace: true, state: null });
    }, []);
 
    onAuthStateChanged(auth, (user) => {
       if (!user) return;
       logIn(user);
    });
-   if (layOutMode === "PWA") return <WebLayout />;
-   if (layOutMode === "WEB") return <WebLayout />;
+
+   if (layoutMode === "PWA") return <PwaLayout />;
+   if (layoutMode === "WEB") return <WebLayout />;
    return <></>;
 }
 

@@ -113,13 +113,13 @@ function WebLayout() {
                               onClick={handleUserButton}
                               isActive={isPopupOpen === "user"}
                               className={`${
-                                 isLoggedIn ? "p-0 overflow-hidden mx-2" : ""
+                                 isLoggedIn ? "p-0 overflow-hidden sm:mx-1" : ""
                               }`}
                            >
                               {isLoggedIn ? (
                                  <img
                                     src={photoUrl}
-                                    className={`h-7 w-9 object-cover hover:brightness-[85%] ${
+                                    className={`h-[34px] w-11 sm:h-7 sm:w-9 object-cover hover:brightness-[85%] ${
                                        isPopupOpen === "user"
                                           ? "brightness-[85%]"
                                           : ""
@@ -130,7 +130,7 @@ function WebLayout() {
                               )}
                            </IconButton>
                            <Popup isOpen={isPopupOpen === "user"}>
-                              {userName && <p className="px-3">{userName}</p>}
+                              {userName && <p className="px-3 text-center">{userName}</p>}
                               <NavIconButton
                                  className="justify-between w-full"
                                  to={routes.settings}

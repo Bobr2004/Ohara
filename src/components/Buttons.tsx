@@ -15,7 +15,7 @@ function IconButton({ children, onClick, isActive, className }: ButtonProps) {
          className={twMerge(
             `${
                isActive ? "!border-stone-200 !bg-stone-100" : ""
-            } py-1 px-3 hover:bg-stone-100 hover:border-stone-200 border-white border rounded-lg transition-all text-2xl sm:text-xl flex items-center`,
+            } py-1 px-3 hover:bg-stone-100 hover:border-stone-200 border-white border rounded-lg text-2xl sm:text-xl flex items-center`,
             className
          )}
          onClick={onClick}
@@ -36,7 +36,7 @@ function NavIconButton({
          {...{ to, onClick }}
          className={twMerge(
             `py-1 px-3 hover:bg-stone-100 hover:border-stone-200 border-white border rounded-lg 
-            transition-all text-2xl sm:text-xl flex items-center gap-4`,
+            text-2xl sm:text-xl flex items-center gap-4`,
             className
          )}
       >
@@ -50,7 +50,7 @@ function Button({ onClick, text, className }: ButtonProps) {
       <button
          className={twMerge(
             `py-1 px-5 hover:bg-stone-100 border-stone-200 border rounded-lg 
-         transition-all flex items-center gap-4`,
+         flex items-center gap-4`,
             className
          )}
          onClick={onClick}
@@ -65,7 +65,7 @@ function ButtonWithIcon({ children, onClick, text, className }: ButtonProps) {
       <button
          className={twMerge(
             `py-1 px-3 hover:bg-stone-100 hover:border-stone-200 border-white border 
-         rounded-lg transition-all text-xl flex items-center gap-4 `,
+         rounded-lg text-xl flex items-center gap-4 `,
             className
          )}
          onClick={onClick}

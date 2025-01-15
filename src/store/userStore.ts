@@ -8,6 +8,9 @@ type userStoreType = {
    email: string;
    logIn: (user: User) => void;
    signOut: () => void;
+
+   layoutMode: "PWA" | "WEB" | null;
+   setLayoutMode: (mode: "PWA" | "WEB" | null) => void;
 };
 
 const useUserStore = create<userStoreType>((set) => ({
@@ -15,6 +18,7 @@ const useUserStore = create<userStoreType>((set) => ({
    userName: "",
    photoUrl: "",
    email: "",
+   layoutMode: null,
    logIn: (user) =>
       set({
          isLoggedIn: true,
@@ -24,6 +28,9 @@ const useUserStore = create<userStoreType>((set) => ({
       }),
    signOut: () => {
       set({ isLoggedIn: false, userName: "", photoUrl: "", email: "" });
+   },
+   setLayoutMode: (mode: "PWA" | "WEB" | null) => {
+      set((usrData) => ({ ...usrData, layoutMode: mode }));
    }
 }));
 
