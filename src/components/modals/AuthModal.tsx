@@ -3,19 +3,17 @@ import { fbSignInWithGoogle, fbSignOut } from "../../API/fbAuth";
 import { Button, DangerButton } from "../Buttons";
 import { ModalLayout } from "../../entry/ModalProvider";
 import { useUserStore } from "../../store/userStore";
-import { getUser, userDbType } from "../../API/fbDb";
+import { useQueryClient } from "@tanstack/react-query";
 
 function AuthModal() {
-   const navigate = useNavigate();
-   const setCurrentUser = useUserStore((s) => s.setCurrentUser);
    const setCurrentUserId = useUserStore((s) => s.setCurrentUserId);
+
+   const queryClient = useQueryClient();
 
    const signInAccount = async () => {
       const userId = await fbSignInWithGoogle();
       setCurrentUserId(userId);
-      const userData = (await getUser(userId)) as userDbType;
-      setCurrentUser(userData);
-      navigate(-1);
+      queryClient.invalidateQueries({ queryKey: ["currentUser"] });
    };
 
    return (
@@ -36,11 +34,12 @@ function AuthModal() {
 function SignOutModal() {
    const navigate = useNavigate();
    const clearCurrentUser = useUserStore((s) => s.clearCurrentUser);
+   const queryClient = useQueryClient();
 
    const signOutAccount = async () => {
       await fbSignOut();
+      queryClient.invalidateQueries({ queryKey: ["currentUser"] });
       clearCurrentUser();
-      navigate(-1);
    };
    return (
       <ModalLayout title="Confirmation">

@@ -40,20 +40,26 @@ function Layout() {
    // Current user set
    const setCurrentUserState = useUserStore((s) => s.setCurrentUserState);
    const setCurrentUser = useUserStore((s) => s.setCurrentUser);
-   const { status } = useQuery({
+   const { isError, isFetching } = useQuery({
       queryKey: ["currentUser"],
       queryFn: async () => {
-         if (!currentUserId) return null;
+         if (!currentUserId) {
+            console.log("ayayayaay");
+            return null;
+         }
          const userResult = (await getUser(currentUserId)) as userDbType;
          setCurrentUser(userResult);
-         console.log(userResult);
+         if (location.state) navigate(-1);
          return null;
-      }
+      },
+      gcTime: 0
    });
 
    useEffect(() => {
-      setCurrentUserState(status);
-   }, [status]);
+      if (isFetching) setCurrentUserState("pending");
+      else if (isError) setCurrentUserState("error");
+      else setCurrentUserState("success");
+   }, [isFetching, isError]);
 
    if (layoutMode === "PWA") return <PwaLayout />;
    if (layoutMode === "WEB") return <WebLayout />;

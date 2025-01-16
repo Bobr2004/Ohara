@@ -1,14 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ModalLayout } from "../../entry/ModalProvider";
 import { listAvatars } from "../../API/fbStorage";
 import { useUserStore } from "../../store/userStore";
-import { WarningButton } from "../Buttons";
+import { Button, WarningButton } from "../Buttons";
 import { useState } from "react";
 import { InputField } from "../InputField";
 import { updateUser } from "../../API/fbDb";
 
 function UserEditModal() {
    const currentUserId = useUserStore((s) => s.currentUserId);
+   const setCurrentUserState = useUserStore((s) => s.setCurrentUserState);
    const { photoURL, googlePhotoURL, displayName } = useUserStore(
       (store) => store.currentUserData
    );
@@ -16,18 +17,30 @@ function UserEditModal() {
 
    const [selectedPhotoUrl, setSelectedPhotoUrl] = useState(photoURL || "");
 
-   const { isPending, data} = useQuery({
+   const { isPending, data } = useQuery({
       queryKey: ["avatars"],
-      queryFn: listAvatars
+      queryFn: listAvatars,
+      refetchOnMount: false
    });
 
+   const queryClient = useQueryClient();
+
    const handleUpdateUser = async () => {
+      setCurrentUserState("pending");
       await updateUser(currentUserId, {
          photoURL: selectedPhotoUrl,
          displayName: userNameVal
       });
-      console.log("yay");
+      queryClient.invalidateQueries({ queryKey: ["currentUser"] });
    };
+
+   const currentUserState = useUserStore((s) => s.currentUserState);
+   const userState = {
+      success: currentUserState === "success" && currentUserId,
+      loading: currentUserState === "pending",
+      unregistered: currentUserState === "success" && !currentUserId
+   };
+
    return (
       <ModalLayout title="Edit Profile">
          <section className="flex gap-2">
@@ -63,9 +76,19 @@ function UserEditModal() {
             value={userNameVal}
             onChange={({ target }) => setUserNameVal(target.value)}
          />
-         <WarningButton className="mx-auto" onClick={handleUpdateUser}>
-            Save changes
-         </WarningButton>
+         {userState.loading && (
+            <Button className="mx-auto !border-white !bg-white">
+               <>
+                  <span>Loading</span>
+                  <i className="pi pi-cog pi-spin"></i>
+               </>
+            </Button>
+         )}
+         {userState.success && (
+            <WarningButton className="mx-auto" onClick={handleUpdateUser}>
+               Save changes
+            </WarningButton>
+         )}
       </ModalLayout>
    );
 }
