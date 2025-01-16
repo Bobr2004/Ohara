@@ -9,6 +9,13 @@ function SettingsPage() {
       (store) => store.currentUserData
    );
 
+   const currentUserState = useUserStore((s) => s.currentUserState);
+   const userState = {
+      success: currentUserState === "success" && currentUserId,
+      loading: currentUserState === "pending",
+      unregistered: currentUserState === "success" && !currentUserId
+   };
+   
    const openModal = useModal();
    return (
       <>
@@ -17,12 +24,18 @@ function SettingsPage() {
          </h1>
          <section className="mx-auto container px-4">
             <div className="border-y border-stone-200 py-2">
-               {!currentUserId ? (
+               {userState.unregistered && (
                   <>
                      <h2 className="text-center">Account info</h2>
                      <p className="text-center">You are not logged in</p>
                   </>
-               ) : (
+               )}
+               {userState.loading && (
+                  <div className="text-center text-3xl w-full">
+                     <i className="pi pi-cog pi-spin"></i>
+                  </div>
+               )}
+               {userState.success && (
                   <ul className="flex flex-col items-center sm:items-start sm:flex-row sm:justify-start gap-x-4 gap-y-2 relative flex-wrap">
                      <li className="sm:hidden">
                         <h2 className="text-center font-medium">

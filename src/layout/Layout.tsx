@@ -4,6 +4,7 @@ import { useUserStore } from "../store/userStore";
 import { useLocation, useNavigate } from "react-router";
 import { PwaLayout } from "./PwaLayout";
 import { getUser, userDbType } from "../API/fbDb";
+import { useQuery } from "@tanstack/react-query";
 
 function isMobilePWA() {
    const isPWA = window.matchMedia("(display-mode: standalone)").matches;
@@ -37,15 +38,22 @@ function Layout() {
    }, []);
 
    // Current user set
+   const setCurrentUserState = useUserStore((s) => s.setCurrentUserState);
    const setCurrentUser = useUserStore((s) => s.setCurrentUser);
-   useEffect(() => {
-      (async () => {
-         if (!currentUserId) return;
+   const { status } = useQuery({
+      queryKey: ["currentUser"],
+      queryFn: async () => {
+         if (!currentUserId) return null;
          const userResult = (await getUser(currentUserId)) as userDbType;
          setCurrentUser(userResult);
          console.log(userResult);
-      })();
-   }, []);
+         return null;
+      }
+   });
+
+   useEffect(() => {
+      setCurrentUserState(status);
+   }, [status]);
 
    if (layoutMode === "PWA") return <PwaLayout />;
    if (layoutMode === "WEB") return <WebLayout />;

@@ -5,6 +5,9 @@ type userStoreType = {
    currentUserId: string;
    setCurrentUserId: (id: string) => void;
 
+   currentUserState: "error" | "success" | "pending";
+   setCurrentUserState: (state: "error" | "success" | "pending") => void;
+
    currentUserData: userDbType;
    setCurrentUser: (user: userDbType) => void;
    clearCurrentUser: () => void;
@@ -21,21 +24,24 @@ const questUser: userDbType = {
 };
 
 const useUserStore = create<userStoreType>((set) => ({
-   // User
+   // User id
    currentUserId: localStorage.getItem("currentUserId") || "",
    setCurrentUserId: (id) =>
       set({
          currentUserId: id
       }),
+   // User state
+   currentUserState: "success",
+   setCurrentUserState: (state) => set({ currentUserState: state }),
+
+   // User data
    currentUserData: { ...questUser },
-   setCurrentUser: (user) => {
+   setCurrentUser: (user) =>
       set({
          currentUserData: { ...user }
-      });
-   },
+      }),
    clearCurrentUser: () => {
       set({ currentUserId: "", currentUserData: { ...questUser } });
-      localStorage.removeItem("currentUserId");
    },
    // Layout
    layoutMode: null,

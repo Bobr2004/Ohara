@@ -16,7 +16,7 @@ function UserEditModal() {
 
    const [selectedPhotoUrl, setSelectedPhotoUrl] = useState(photoURL || "");
 
-   const { isPending, data, error } = useQuery({
+   const { isPending, data} = useQuery({
       queryKey: ["avatars"],
       queryFn: listAvatars
    });

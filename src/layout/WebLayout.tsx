@@ -15,7 +15,7 @@ import {
 
 function WebLayout() {
    const currentUserId = useUserStore((s) => s.currentUserId);
-   const {photoURL, displayName} = useUserStore((s) => s.currentUserData);
+   const { photoURL, displayName } = useUserStore((s) => s.currentUserData);
    const openModal = useModal();
    const navigate = useNavigate();
    // custom states
@@ -52,6 +52,13 @@ function WebLayout() {
       });
    }, []);
 
+   const currentUserState = useUserStore((s) => s.currentUserState);
+   const userState = {
+      success: currentUserState === "success" && currentUserId,
+      loading: currentUserState === "pending",
+      unregistered: currentUserState === "success" && !currentUserId
+   };
+
    return (
       <>
          <header className=" border-b border-stone-200 p-3 lg:px-8">
@@ -79,6 +86,7 @@ function WebLayout() {
                      <li>
                         <div className="sm:relative popupResist">
                            {/* ADD ICON */}
+
                            <LayoutIconButton
                               onClick={hundleAddButton}
                               className={
@@ -89,6 +97,7 @@ function WebLayout() {
                            >
                               <span className="pi pi-plus-circle"></span>
                            </LayoutIconButton>
+
                            <Popup isOpen={isPopupOpen === "add"}>
                               <LayoutBorderlessButton
                                  onClick={() =>
@@ -129,32 +138,42 @@ function WebLayout() {
                      <li>
                         <div className="sm:relative popupResist">
                            {/* USER ICON */}
-                           <LayoutIconButton
-                              onClick={handleUserButton}
-                              className={`${
-                                 currentUserId ? "p-0 overflow-hidden sm:mx-1" : ""
-                              } ${
-                                 isPopupOpen === "user"
-                                    ? "border-stone-200 bg-stone-100"
-                                    : ""
-                              }`}
-                           >
-                              {currentUserId ? (
-                                 <img
-                                    src={photoURL}
-                                    className={`h-[34px] w-11 sm:h-7 sm:w-9 object-cover hover:brightness-[85%] ${
-                                       isPopupOpen === "user"
-                                          ? "brightness-[85%]"
-                                          : ""
-                                    }`}
-                                 />
-                              ) : (
-                                 <span className="pi pi-user"></span>
-                              )}
-                           </LayoutIconButton>
+                           {userState.loading ? (
+                              <LayoutIconButton className="hover:border-white hover:bg-white">
+                                 <i className="pi pi-cog pi-spin"></i>
+                              </LayoutIconButton>
+                           ) : (
+                              <LayoutIconButton
+                                 onClick={handleUserButton}
+                                 className={`${
+                                    currentUserId
+                                       ? "p-0 overflow-hidden sm:mx-1"
+                                       : ""
+                                 } ${
+                                    isPopupOpen === "user"
+                                       ? "border-stone-200 bg-stone-100"
+                                       : ""
+                                 }`}
+                              >
+                                 {currentUserId ? (
+                                    <img
+                                       src={photoURL}
+                                       className={`h-[34px] w-11 sm:h-7 sm:w-9 object-cover hover:brightness-[85%] ${
+                                          isPopupOpen === "user"
+                                             ? "brightness-[85%]"
+                                             : ""
+                                       }`}
+                                    />
+                                 ) : (
+                                    <span className="pi pi-user"></span>
+                                 )}
+                              </LayoutIconButton>
+                           )}
                            <Popup isOpen={isPopupOpen === "user"}>
                               {displayName && (
-                                 <p className="px-3 text-center">{displayName}</p>
+                                 <p className="px-3 text-center">
+                                    {displayName}
+                                 </p>
                               )}
                               <LayoutLinkIconButton
                                  className="justify-between w-full"
