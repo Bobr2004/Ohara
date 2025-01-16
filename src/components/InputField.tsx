@@ -8,7 +8,7 @@ type InputFieldProps = {
 
 function InputField({ className, title, ...InputFieldProps }: InputFieldProps) {
    return (
-      <label className="InputField pt-3 pb-1 px-3 border border-stone-200 rounded-lg bg-white w-full block">
+      <label className="InputField pt-4 pb-1 px-3 border border-stone-200 rounded-lg bg-white w-full block">
          <input {...InputFieldProps} className="w-full outline-none" placeholder=" "/>
          <span>{title}</span>
       </label>

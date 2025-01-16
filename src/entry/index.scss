@@ -47,12 +47,12 @@ i {
    position: relative;
    span {
       position: absolute;
-      top: 0.5rem;
+      top: 0.625rem;
       left: 0.75rem;
    }
    input:not(:placeholder-shown) ~ span,
    input:focus ~ span {
-      font-size: 0.75rem;
+      font-size: 0.80rem;
       top: 0.125rem;
    }
 

@@ -1,7 +1,6 @@
 import { NavLink, Outlet } from "react-router";
 import { routes } from "../config/routes";
 
-import { NavSearchBar } from "../components/SearchBar";
 import { Popup } from "../components/Popup";
 import { useEffect, useState } from "react";
 import { useModal } from "../entry/ModalProvider";
@@ -10,7 +9,8 @@ import { useUserStore } from "../store/userStore";
 import {
    LayoutBorderlessButton,
    LayoutIconButton,
-   LayoutLinkIconButton
+   LayoutLinkIconButton,
+   LayoutSearchBar
 } from "./LayoutComponents";
 
 function WebLayout() {
@@ -49,7 +49,7 @@ function WebLayout() {
                   <NavLink to={routes.home} className="text-xl sm:text-base">
                      Ohara
                   </NavLink>
-                  <NavSearchBar className="hidden sm:flex" />
+                  <LayoutSearchBar className="hidden sm:flex" />
                </div>
                <div>
                   <LayoutIconButton
