@@ -42,3 +42,21 @@ i {
       overflow: visible;
    }
 }
+
+.InputField {
+   position: relative;
+   span {
+      position: absolute;
+      top: 0.5rem;
+      left: 0.75rem;
+   }
+   input:not(:placeholder-shown) ~ span,
+   input:focus ~ span {
+      font-size: 0.75rem;
+      top: 0.125rem;
+   }
+
+   input {
+      box-sizing: border-box;
+   }
+}

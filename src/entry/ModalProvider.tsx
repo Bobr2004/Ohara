@@ -1,11 +1,10 @@
 import { PropsWithChildren, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
-import { UploadPdfModal } from "./UploadModal";
-import { ErrorModal } from "./ErrorModal";
-import { ModalsEnum } from "../../config/enums";
-import { AuthModal, SignOutModal } from "./AuthModal";
-import { AvatarsModal } from "./AvatarsModal";
-import { Button } from "../Buttons";
+import { UploadPdfModal } from "../components/modals/UploadModal";
+import { ErrorModal } from "../components/modals/ErrorModal";
+import { AuthModal, SignOutModal } from "../components/modals/AuthModal";
+import { UserEditModal } from "../components/modals/UserEditModal";
+import { Button } from "../components/Buttons";
 
 function Overlay() {
    const navigate = useNavigate();
@@ -55,43 +54,36 @@ function ModalLayout({
    );
 }
 
-function ModalProvider() {
-   const location = useLocation();
-   const modal = location.state?.modal;
-   if (!modal) return <></>;
-   switch (modal) {
-      case ModalsEnum.uploadPdf:
-         return <UploadPdfModal />;
-      case ModalsEnum.auth:
-         return <AuthModal />;
-      case ModalsEnum.avatars:
-         return <AvatarsModal />;
-      case ModalsEnum.error: {
-         const text = location.state?.text;
-         return <ErrorModal {...{ text }} />;
-      }
-      case ModalsEnum.signOut: {
-         const text = location.state?.text;
-         const fn = location.state?.fn;
-         return <SignOutModal {...{ text, fn }} />;
-      }
-      default:
-         return <></>;
-   }
-   // if (modal === ModalsEnum.uploadPdf) return <UploadPdfModal />;
-   // // if (modal === ModalsEnum.uploadPdf) return <UploadPdfModal />;
-   // if (modal === ModalsEnum.auth) return <AuthModal />;
-   // if (modal === ModalsEnum.error) {
-   //    const text = location.state?.text;
-   //    return <ErrorModal {...{ text }} />;
-   // }
-   // return <></>;
+enum ModalsEnum {
+   uploadPdf = "uploadPdf",
+   uploadAudio = "uploadAudio",
+   auth = "auth",
+   userEdit = "userEdit",
+   signOut = "signOut",
+   error = "error",
+   confirm = "confirm"
 }
 
 type modalState = {
    modal: ModalsEnum;
    text?: string;
 };
+
+function ModalProvider() {
+   const location = useLocation();
+  const modal = location.state?.modal
+  const text = location.state?.text
+
+
+   if (!modal) return <></>;
+   // User
+   if (modal === ModalsEnum.auth) return <AuthModal />;
+   if (modal === ModalsEnum.signOut) return <SignOutModal />;
+   if (modal === ModalsEnum.userEdit) return <UserEditModal />;
+   // Upload
+   if (modal === ModalsEnum.uploadPdf) return <UploadPdfModal/>
+   if (modal === ModalsEnum.error) return <ErrorModal {...{ text }} />;
+}
 
 function useModal() {
    const location = useLocation();
@@ -103,3 +95,5 @@ function useModal() {
 }
 
 export { ModalProvider, ModalLayout, useModal };
+
+export { ModalsEnum };

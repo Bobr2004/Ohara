@@ -61,7 +61,7 @@ function WarningButton({ children, className, ...ButtonProps }: ButtonProps) {
       <Button
          {...ButtonProps}
          className={twMerge(
-            "text-white border-sky-700 bg-sky-500 hover:bg-sky-600 hover:border-sky-600",
+            "text-white border-blue-700 bg-blue-500 hover:bg-blue-600 hover:border-blue-600",
             className
          )}
       >

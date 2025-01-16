@@ -3,7 +3,7 @@ import { Layout } from "../layout/Layout";
 import { routes } from "../config/routes";
 import { HomePage } from "../pages/HomePage";
 import { NotFoundPage } from "../pages/NotFoundPage";
-import { ModalProvider } from "../components/modals/ModalProvider";
+import { ModalProvider } from "./ModalProvider";
 import { SettingsPage } from "../pages/SettingsPage";
 
 function Router() {

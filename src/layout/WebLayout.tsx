@@ -4,8 +4,8 @@ import { routes } from "../config/routes";
 import { NavSearchBar } from "../components/SearchBar";
 import { Popup } from "../components/Popup";
 import { useEffect, useState } from "react";
-import { useModal } from "../components/modals/ModalProvider";
-import { ModalsEnum } from "../config/enums";
+import { useModal } from "../entry/ModalProvider";
+import { ModalsEnum } from "../entry/ModalProvider";
 import { useUserStore } from "../store/userStore";
 import {
    LayoutBorderlessButton,

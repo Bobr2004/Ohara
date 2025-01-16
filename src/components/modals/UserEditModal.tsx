@@ -1,12 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import { ModalLayout } from "./ModalProvider";
+import { ModalLayout } from "../../entry/ModalProvider";
 import { listAvatars } from "../../API/fbStorage";
 import { AvatarSelect } from "../AvatarSelect";
 import { useUserStore } from "../../store/userStore";
 import { WarningButton } from "../Buttons";
 import { useState } from "react";
+import { InputField } from "../InputField";
 
-function AvatarsModal() {
+function UserEditModal() {
    const photoUrl = useUserStore((store) => store.photoUrl);
    const userName = useUserStore((store) => store.userName);
    const [userNameVal, setUserNameVal] = useState(userName);
@@ -37,7 +38,9 @@ function AvatarsModal() {
                </ul>
             </div>
          </section>
-         <input
+         <InputField
+            type="text"
+            title="Username"
             value={userNameVal}
             onChange={({ target }) => setUserNameVal(target.value)}
          />
@@ -46,4 +49,4 @@ function AvatarsModal() {
    );
 }
 
-export { AvatarsModal };
+export { UserEditModal };

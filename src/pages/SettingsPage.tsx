@@ -1,6 +1,6 @@
 import { Button } from "../components/Buttons";
-import { useModal } from "../components/modals/ModalProvider";
-import { ModalsEnum } from "../config/enums";
+import { useModal } from "../entry/ModalProvider";
+import { ModalsEnum } from "../entry/ModalProvider";
 import { useUserStore } from "../store/userStore";
 
 function SettingsPage() {
@@ -44,7 +44,7 @@ function SettingsPage() {
                      <li>
                         <Button
                            onClick={() =>
-                              openModal({ modal: ModalsEnum.avatars })
+                              openModal({ modal: ModalsEnum.userEdit })
                            }
                         >
                            <>
@@ -58,7 +58,6 @@ function SettingsPage() {
                )}
             </div>
          </section>
-         <section></section>
       </>
    );
 }

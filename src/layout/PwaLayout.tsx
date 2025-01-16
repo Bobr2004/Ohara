@@ -2,9 +2,9 @@ import { Outlet } from "react-router";
 import { routes } from "../config/routes";
 import { Popup } from "../components/Popup";
 import { useEffect, useState } from "react";
-import { useModal } from "../components/modals/ModalProvider";
+import { useModal } from "../entry/ModalProvider";
 import { useUserStore } from "../store/userStore";
-import { ModalsEnum } from "../config/enums";
+import { ModalsEnum } from "../entry/ModalProvider";
 import {
    LayoutBorderlessButton,
    LayoutIconButton,

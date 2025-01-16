@@ -25,8 +25,8 @@ const fbSignInWithGoogle = async () => {
    }
 };
 
-const fbSignOut = () => {
-   signOut(auth).then((res) => console.log(res));
+const fbSignOut = async () => {
+   await signOut(auth);
 };
 
 export { fbSignInWithGoogle, fbSignOut };
