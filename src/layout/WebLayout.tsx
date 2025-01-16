@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from "react-router";
+import { NavLink, Outlet, useNavigate } from "react-router";
 import { routes } from "../config/routes";
 
 import { Popup } from "../components/Popup";
@@ -14,12 +14,12 @@ import {
 } from "./LayoutComponents";
 
 function WebLayout() {
+   const { userName, isLoggedIn, photoUrl } = useUserStore((store) => store);
    const openModal = useModal();
+   const navigate = useNavigate();
    // custom states
    const [isPopupOpen, setIsPopupOpen] = useState<"" | "add" | "user">("");
    const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-   const { userName, isLoggedIn, photoUrl } = useUserStore((store) => store);
 
    const hundleAddButton = () => {
       setIsPopupOpen((isPO) => (isPO === "add" ? "" : "add"));
@@ -30,6 +30,7 @@ function WebLayout() {
    };
 
    useEffect(() => {
+      const isMac = navigator.platform.toUpperCase().includes("MAC");
       document
          .querySelector("#root")
          ?.addEventListener("click", ({ target }) => {
@@ -39,6 +40,15 @@ function WebLayout() {
                setIsPopupOpen("");
             }
          });
+
+      document.addEventListener("keydown", (event) => {
+         const isCmdK = isMac && event.metaKey && event.key === "k";
+         const isCtrlK = !isMac && event.ctrlKey && event.key === "k";
+         if (isCmdK || isCtrlK) {
+            navigate(routes.search);
+            document.getElementById("searchBar")?.focus();
+         }
+      });
    }, []);
 
    return (
