@@ -45,7 +45,7 @@ function WebLayout() {
          const isCmdK = isMac && event.metaKey && event.key === "k";
          const isCtrlK = !isMac && event.ctrlKey && event.key === "k";
          if (isCmdK || isCtrlK) {
-            navigate(routes.search);
+            navigate(routes.search, { state: { isSearchFocused: true } });
             document.getElementById("searchBar")?.focus();
          }
       });

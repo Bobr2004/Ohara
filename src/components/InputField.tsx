@@ -3,13 +3,18 @@ type InputFieldProps = {
    type: "text" | "password" | "number";
    title: string;
    value: any;
+   id?: string;
    onChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
 function InputField({ className, title, ...InputFieldProps }: InputFieldProps) {
    return (
       <label className="InputField pt-4 pb-1 px-3 border border-stone-200 rounded-lg bg-white w-full block">
-         <input {...InputFieldProps} className="w-full outline-none" placeholder=" "/>
+         <input
+            {...InputFieldProps}
+            className="w-full outline-none"
+            placeholder=" "
+         />
          <span>{title}</span>
       </label>
    );
