@@ -14,7 +14,8 @@ import {
 } from "./LayoutComponents";
 
 function WebLayout() {
-   const { userName, isLoggedIn, photoUrl } = useUserStore((store) => store);
+   const isLoggedIn = useUserStore((s) => s.isLoggedIn);
+   const {photoURL, displayName} = useUserStore((s) => s.currentUserData);
    const openModal = useModal();
    const navigate = useNavigate();
    // custom states
@@ -140,7 +141,7 @@ function WebLayout() {
                            >
                               {isLoggedIn ? (
                                  <img
-                                    src={photoUrl}
+                                    src={photoURL}
                                     className={`h-[34px] w-11 sm:h-7 sm:w-9 object-cover hover:brightness-[85%] ${
                                        isPopupOpen === "user"
                                           ? "brightness-[85%]"
@@ -152,8 +153,8 @@ function WebLayout() {
                               )}
                            </LayoutIconButton>
                            <Popup isOpen={isPopupOpen === "user"}>
-                              {userName && (
-                                 <p className="px-3 text-center">{userName}</p>
+                              {displayName && (
+                                 <p className="px-3 text-center">{displayName}</p>
                               )}
                               <LayoutLinkIconButton
                                  className="justify-between w-full"

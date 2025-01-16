@@ -1,41 +1,60 @@
-import { User } from "firebase/auth";
 import { create } from "zustand";
+
+type bookProgress = { bookId: string; page: number };
+
+type userType = {
+   id?: string;
+   displayName?: string;
+   email?: string;
+   photoURL?: string;
+   googlePhotoURL?: string;
+   progress?: bookProgress[];
+};
 
 type userStoreType = {
    isLoggedIn: boolean;
-   userName: string;
-   photoUrl: string;
-   email: string;
-   logIn: (user: User) => void;
-   signOut: () => void;
+   currentUserData: userType;
+   setCurrentUser: (user: userType) => void;
+   clearCurrentUser: () => void;
 
    layoutMode: "PWA" | "WEB" | null;
    setLayoutMode: (mode: "PWA" | "WEB" | null) => void;
-   changeAvatar: (URL: string) => void;
+};
+
+const questUser: userType = {
+   id: "",
+   displayName: "",
+   email: "",
+   photoURL: "",
+   googlePhotoURL: "",
+   progress: []
 };
 
 const useUserStore = create<userStoreType>((set) => ({
+   // User
    isLoggedIn: false,
-   userName: "",
-   photoUrl: "",
-   email: "",
-   layoutMode: null,
-   logIn: (user) =>
+   currentUserData: { ...questUser },
+   setCurrentUser: (user) => {
       set({
          isLoggedIn: true,
-         userName: user.displayName || "",
-         photoUrl: user.photoURL || "",
-         email: user.email || ""
-      }),
-   signOut: () => {
-      set({ isLoggedIn: false, userName: "", photoUrl: "", email: "" });
+         currentUserData: { ...user }
+      });
+      if (user.id) localStorage.setItem("currentUserId", user.id);
    },
+   clearCurrentUser: () => {
+      set({ isLoggedIn: false, currentUserData: { ...questUser } });
+      localStorage.removeItem("currentUserId");
+   },
+   // Layout
+   layoutMode: null,
    setLayoutMode: (mode: "PWA" | "WEB" | null) => {
-      set((usrData) => ({ ...usrData, layoutMode: mode }));
+      set((data) => ({ ...data, layoutMode: mode }));
    },
    changeAvatar: (URL: string) => {
-      set((usrData) => ({ ...usrData, photoUrl: URL }));
+      set((data) => ({ ...data, photoUrl: URL }));
    }
 }));
 
 export { useUserStore };
+
+export type { userType };

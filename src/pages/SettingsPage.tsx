@@ -4,8 +4,9 @@ import { ModalsEnum } from "../entry/ModalProvider";
 import { useUserStore } from "../store/userStore";
 
 function SettingsPage() {
-   const { userName, email, photoUrl, isLoggedIn } = useUserStore(
-      (store) => store
+   const isLoggedIn = useUserStore((store) => store.isLoggedIn);
+   const { displayName, email, photoURL } = useUserStore(
+      (store) => store.currentUserData
    );
 
    const openModal = useModal();
@@ -30,7 +31,7 @@ function SettingsPage() {
                      </li>
                      <li>
                         <img
-                           src={photoUrl}
+                           src={photoURL}
                            className="h-20 w-20 object-cover"
                         />
                      </li>
@@ -38,7 +39,7 @@ function SettingsPage() {
                         <h2 className="text-center font-medium hidden sm:block">
                            Account info
                         </h2>
-                        <p>{userName}</p>
+                        <p>{displayName}</p>
                         <p>{email}</p>
                      </li>
                      <li>
