@@ -1,60 +1,47 @@
 import { create } from "zustand";
-
-type bookProgress = { bookId: string; page: number };
-
-type userType = {
-   id?: string;
-   displayName?: string;
-   email?: string;
-   photoURL?: string;
-   googlePhotoURL?: string;
-   progress?: bookProgress[];
-};
+import { userDbType } from "../API/fbDb";
 
 type userStoreType = {
-   isLoggedIn: boolean;
-   currentUserData: userType;
-   setCurrentUser: (user: userType) => void;
+   currentUserId: string;
+   setCurrentUserId: (id: string) => void;
+
+   currentUserData: userDbType;
+   setCurrentUser: (user: userDbType) => void;
    clearCurrentUser: () => void;
 
    layoutMode: "PWA" | "WEB" | null;
    setLayoutMode: (mode: "PWA" | "WEB" | null) => void;
 };
 
-const questUser: userType = {
-   id: "",
+const questUser: userDbType = {
    displayName: "",
    email: "",
    photoURL: "",
-   googlePhotoURL: "",
-   progress: []
+   googlePhotoURL: ""
 };
 
 const useUserStore = create<userStoreType>((set) => ({
    // User
-   isLoggedIn: false,
+   currentUserId: localStorage.getItem("currentUserId") || "",
+   setCurrentUserId: (id) =>
+      set({
+         currentUserId: id
+      }),
    currentUserData: { ...questUser },
    setCurrentUser: (user) => {
       set({
-         isLoggedIn: true,
          currentUserData: { ...user }
       });
-      if (user.id) localStorage.setItem("currentUserId", user.id);
    },
    clearCurrentUser: () => {
-      set({ isLoggedIn: false, currentUserData: { ...questUser } });
+      set({ currentUserId: "", currentUserData: { ...questUser } });
       localStorage.removeItem("currentUserId");
    },
    // Layout
    layoutMode: null,
    setLayoutMode: (mode: "PWA" | "WEB" | null) => {
-      set((data) => ({ ...data, layoutMode: mode }));
-   },
-   changeAvatar: (URL: string) => {
-      set((data) => ({ ...data, photoUrl: URL }));
+      set({ layoutMode: mode });
    }
 }));
 
 export { useUserStore };
-
-export type { userType };

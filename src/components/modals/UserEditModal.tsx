@@ -5,25 +5,36 @@ import { useUserStore } from "../../store/userStore";
 import { WarningButton } from "../Buttons";
 import { useState } from "react";
 import { InputField } from "../InputField";
+import { updateUser } from "../../API/fbDb";
 
 function UserEditModal() {
-   const photoUrl = useUserStore((store) => store.photoUrl);
-   const userName = useUserStore((store) => store.userName);
-   const [userNameVal, setUserNameVal] = useState(userName);
+   const currentUserId = useUserStore((s) => s.currentUserId);
+   const { photoURL, googlePhotoURL, displayName } = useUserStore(
+      (store) => store.currentUserData
+   );
+   const [userNameVal, setUserNameVal] = useState(displayName);
 
-   const [selectedPhotoUrl, setSelectedPhotoUrl] = useState(photoUrl);
+   const [selectedPhotoUrl, setSelectedPhotoUrl] = useState(photoURL || "");
 
    const { isPending, data, error } = useQuery({
       queryKey: ["avatars"],
       queryFn: listAvatars
    });
+
+   const handleUpdateUser = async () => {
+      await updateUser(currentUserId, {
+         photoURL: selectedPhotoUrl,
+         displayName: userNameVal
+      });
+      console.log("yay");
+   };
    return (
       <ModalLayout title="Edit Profile">
          <section className="flex gap-2">
             <div className="flex-shrink-0">
                <h4 className="flex gap-1 items-center w-min">Google</h4>
                <AvatarSelect
-                  src={photoUrl}
+                  src={googlePhotoURL || ""}
                   {...{ selectedPhotoUrl, setSelectedPhotoUrl }}
                />
             </div>
@@ -52,13 +63,7 @@ function UserEditModal() {
             value={userNameVal}
             onChange={({ target }) => setUserNameVal(target.value)}
          />
-         <WarningButton
-            className="mx-auto"
-            onClick={() => {
-               console.log(userNameVal);
-               console.log(selectedPhotoUrl);
-            }}
-         >
+         <WarningButton className="mx-auto" onClick={handleUpdateUser}>
             Save changes
          </WarningButton>
       </ModalLayout>

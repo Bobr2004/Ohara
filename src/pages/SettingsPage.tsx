@@ -4,7 +4,7 @@ import { ModalsEnum } from "../entry/ModalProvider";
 import { useUserStore } from "../store/userStore";
 
 function SettingsPage() {
-   const isLoggedIn = useUserStore((store) => store.isLoggedIn);
+   const currentUserId = useUserStore((s) => s.currentUserId);
    const { displayName, email, photoURL } = useUserStore(
       (store) => store.currentUserData
    );
@@ -17,13 +17,13 @@ function SettingsPage() {
          </h1>
          <section className="mx-auto container px-4">
             <div className="border-y border-stone-200 py-2">
-               {!isLoggedIn ? (
+               {!currentUserId ? (
                   <>
                      <h2 className="text-center">Account info</h2>
                      <p className="text-center">You are not logged in</p>
                   </>
                ) : (
-                  <ul className="flex flex-col items-center sm:flex-row sm:justify-start gap-x-4 gap-y-2 relative flex-wrap">
+                  <ul className="flex flex-col items-center sm:items-start sm:flex-row sm:justify-start gap-x-4 gap-y-2 relative flex-wrap">
                      <li className="sm:hidden">
                         <h2 className="text-center font-medium">
                            Account info

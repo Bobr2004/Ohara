@@ -14,7 +14,7 @@ import {
 } from "./LayoutComponents";
 
 function WebLayout() {
-   const isLoggedIn = useUserStore((s) => s.isLoggedIn);
+   const currentUserId = useUserStore((s) => s.currentUserId);
    const {photoURL, displayName} = useUserStore((s) => s.currentUserData);
    const openModal = useModal();
    const navigate = useNavigate();
@@ -132,14 +132,14 @@ function WebLayout() {
                            <LayoutIconButton
                               onClick={handleUserButton}
                               className={`${
-                                 isLoggedIn ? "p-0 overflow-hidden sm:mx-1" : ""
+                                 currentUserId ? "p-0 overflow-hidden sm:mx-1" : ""
                               } ${
                                  isPopupOpen === "user"
                                     ? "border-stone-200 bg-stone-100"
                                     : ""
                               }`}
                            >
-                              {isLoggedIn ? (
+                              {currentUserId ? (
                                  <img
                                     src={photoURL}
                                     className={`h-[34px] w-11 sm:h-7 sm:w-9 object-cover hover:brightness-[85%] ${
@@ -166,7 +166,7 @@ function WebLayout() {
                                     <i className="pi pi-cog"></i>
                                  </>
                               </LayoutLinkIconButton>
-                              {isLoggedIn ? (
+                              {currentUserId ? (
                                  <LayoutBorderlessButton
                                     onClick={() =>
                                        openModal({

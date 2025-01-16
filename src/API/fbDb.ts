@@ -1,8 +1,15 @@
 import { collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../config/fb.config";
-import { userType } from "../store/userStore";
 
-type userDbType = Omit<userType, "id">;
+type bookProgress = { bookId: string; page: number };
+
+type userDbType = {
+   displayName?: string;
+   email?: string;
+   photoURL?: string;
+   googlePhotoURL?: string;
+   progress?: bookProgress[];
+};
 
 const usersCollection = collection(db, "users");
 

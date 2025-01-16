@@ -8,11 +8,13 @@ import { getUser, userDbType } from "../../API/fbDb";
 function AuthModal() {
    const navigate = useNavigate();
    const setCurrentUser = useUserStore((s) => s.setCurrentUser);
+   const setCurrentUserId = useUserStore((s) => s.setCurrentUserId);
 
    const signInAccount = async () => {
       const userId = await fbSignInWithGoogle();
+      setCurrentUserId(userId);
       const userData = (await getUser(userId)) as userDbType;
-      setCurrentUser({ id: userId, ...userData });
+      setCurrentUser(userData);
       navigate(-1);
    };
 
@@ -34,7 +36,7 @@ function AuthModal() {
 function SignOutModal() {
    const navigate = useNavigate();
    const clearCurrentUser = useUserStore((s) => s.clearCurrentUser);
-   
+
    const signOutAccount = async () => {
       await fbSignOut();
       clearCurrentUser();
