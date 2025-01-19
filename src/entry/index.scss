@@ -52,7 +52,7 @@ i {
    }
    input:not(:placeholder-shown) ~ span,
    input:focus ~ span {
-      font-size: 0.80rem;
+      font-size: 0.8rem;
       top: 0.125rem;
    }
 
@@ -60,3 +60,4 @@ i {
       box-sizing: border-box;
    }
 }
+

@@ -189,8 +189,7 @@ function WebLayout() {
                                  <LayoutBorderlessButton
                                     onClick={() =>
                                        openModal({
-                                          modal: ModalsEnum.signOut,
-                                          text: "Are you sure you want to sign out?"
+                                          modal: ModalsEnum.signOut
                                        })
                                     }
                                     className="justify-between w-full"

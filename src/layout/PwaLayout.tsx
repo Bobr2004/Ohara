@@ -16,7 +16,8 @@ function PwaLayout() {
    // custom states
    const [isPopupOpen, setIsPopupOpen] = useState<"" | "add" | "user">("");
 
-   const { userName, isLoggedIn, photoUrl } = useUserStore((store) => store);
+   const currentUserId = useUserStore((s) => s.currentUserId);
+   const { photoURL, displayName } = useUserStore((s) => s.currentUserData);
 
    const hundleAddButton = () => {
       setIsPopupOpen((isPO) => (isPO === "add" ? "" : "add"));
@@ -37,6 +38,13 @@ function PwaLayout() {
             }
          });
    }, []);
+
+   const currentUserState = useUserStore((s) => s.currentUserState);
+   const userState = {
+      success: currentUserState === "success" && currentUserId,
+      loading: currentUserState === "pending",
+      unregistered: currentUserState === "success" && !currentUserId
+   };
    return (
       <>
          <main>
@@ -99,25 +107,31 @@ function PwaLayout() {
                      </li>
                      <li>
                         <div className="sm:relative popupResist">
-                           <LayoutIconButton
-                              onClick={handleUserButton}
-                              className={`${
-                                 isLoggedIn ? "p-0 overflow-hidden" : ""
-                              }`}
-                           >
-                              {isLoggedIn ? (
-                                 <img
-                                    src={photoUrl}
-                                    className={`h-[34px] w-11 object-cover hover:brightness-[85%] ${
-                                       isPopupOpen === "user"
-                                          ? "brightness-[85%]"
-                                          : ""
-                                    }`}
-                                 />
-                              ) : (
-                                 <span className="pi pi-user"></span>
-                              )}
-                           </LayoutIconButton>
+                           {userState.loading ? (
+                              <LayoutIconButton className="hover:border-white hover:bg-white">
+                                 <i className="pi pi-cog pi-spin"></i>
+                              </LayoutIconButton>
+                           ) : (
+                              <LayoutIconButton
+                                 onClick={handleUserButton}
+                                 className={`${
+                                    currentUserId ? "p-0 overflow-hidden" : ""
+                                 }`}
+                              >
+                                 {currentUserId ? (
+                                    <img
+                                       src={photoURL}
+                                       className={`h-[34px] w-11 object-cover hover:brightness-[85%] ${
+                                          isPopupOpen === "user"
+                                             ? "brightness-[85%]"
+                                             : ""
+                                       }`}
+                                    />
+                                 ) : (
+                                    <span className="pi pi-user"></span>
+                                 )}
+                              </LayoutIconButton>
+                           )}
                            <Popup
                               isOpen={isPopupOpen === "user"}
                               direction="up"
@@ -132,12 +146,11 @@ function PwaLayout() {
                                     <i className="pi pi-cog"></i>
                                  </>
                               </LayoutLinkIconButton>
-                              {isLoggedIn ? (
+                              {currentUserId ? (
                                  <LayoutBorderlessButton
                                     onClick={() =>
                                        openModal({
                                           modal: ModalsEnum.signOut,
-                                          text: "Are you sure you want to sign out?"
                                        })
                                     }
                                     className="justify-between w-full"
@@ -160,8 +173,10 @@ function PwaLayout() {
                                     </>
                                  </LayoutBorderlessButton>
                               )}
-                              {userName && (
-                                 <p className="px-3 text-center">{userName}</p>
+                              {displayName && (
+                                 <p className="px-3 text-center">
+                                    {displayName}
+                                 </p>
                               )}
                            </Popup>
                         </div>

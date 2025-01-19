@@ -1,4 +1,4 @@
-import { collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { collection, doc, setDoc, getDoc, updateDoc } from "firebase/firestore/lite";
 import { db } from "../config/fb.config";
 
 type bookProgress = { bookId: string; page: number };

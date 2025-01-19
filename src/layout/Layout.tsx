@@ -4,7 +4,7 @@ import { useUserStore } from "../store/userStore";
 import { useLocation, useNavigate } from "react-router";
 import { PwaLayout } from "./PwaLayout";
 import { getUser, userDbType } from "../API/fbDb";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 function isMobilePWA() {
    const isPWA = window.matchMedia("(display-mode: standalone)").matches;
@@ -43,17 +43,25 @@ function Layout() {
    const { isError, isFetching } = useQuery({
       queryKey: ["currentUser"],
       queryFn: async () => {
+         console.log(currentUserId);
          if (!currentUserId) {
-            console.log("ayayayaay");
+            if (location.state) navigate(-1);
             return null;
          }
          const userResult = (await getUser(currentUserId)) as userDbType;
          setCurrentUser(userResult);
+
          if (location.state) navigate(-1);
          return null;
-      },
-      gcTime: 0
+      }
    });
+
+   const queryClient = useQueryClient();
+
+   useEffect(() => {
+      queryClient.invalidateQueries({ queryKey: ["currentUser"] });
+      console.log(currentUserId);
+   }, [currentUserId]);
 
    useEffect(() => {
       if (isFetching) setCurrentUserState("pending");

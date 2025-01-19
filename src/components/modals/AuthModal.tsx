@@ -3,17 +3,13 @@ import { fbSignInWithGoogle, fbSignOut } from "../../API/fbAuth";
 import { Button, DangerButton } from "../Buttons";
 import { ModalLayout } from "../../entry/ModalProvider";
 import { useUserStore } from "../../store/userStore";
-import { useQueryClient } from "@tanstack/react-query";
 
 function AuthModal() {
    const setCurrentUserId = useUserStore((s) => s.setCurrentUserId);
 
-   const queryClient = useQueryClient();
-
    const signInAccount = async () => {
       const userId = await fbSignInWithGoogle();
       setCurrentUserId(userId);
-      queryClient.invalidateQueries({ queryKey: ["currentUser"] });
    };
 
    return (
@@ -34,11 +30,9 @@ function AuthModal() {
 function SignOutModal() {
    const navigate = useNavigate();
    const clearCurrentUser = useUserStore((s) => s.clearCurrentUser);
-   const queryClient = useQueryClient();
 
    const signOutAccount = async () => {
       await fbSignOut();
-      queryClient.invalidateQueries({ queryKey: ["currentUser"] });
       clearCurrentUser();
    };
    return (
